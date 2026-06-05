@@ -8,7 +8,7 @@ public class Player : MonoBehaviour
     
     [SerializeField] float speed;
     [SerializeField] float jumpSpeed;
-    private int groundcheck;
+    bool isGrounded = true;
 
     public float MaxLife => 100f;
     public ReactiveProperty<float> life { get; private set; } = new();
@@ -27,6 +27,8 @@ public class Player : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         life.Value = MaxLife;
 
+        Debug.Log(playerInput.actions["Jump"]);
+
         state = stateMove;
         stateMove.playerInput = playerInput;
         stateMove.rb = rb;
@@ -38,40 +40,7 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        // 移動
-        var move = playerInput.actions["Move"].ReadValue<Vector2>();
-        if (move.x != 0f)
-        {
-            rb.linearVelocityX = move.x * speed;
-
-            // 向き
-            var localScale = transform.localScale;
-            if (move.x < 0)
-            {
-                localScale.x = 1f;
-            }
-            else
-            {
-                localScale.x = -1f;
-            }
-            transform.localScale = localScale;
-        }
-
-        // ジャンプ
-        if (playerInput.actions["Jump"].WasPressedThisFrame())
-        {
-            //if(groundcheck == 0)
-            //{
-                rb.linearVelocityY = jumpSpeed;
-            //}
-            
-        }
-
-        //アタック
-        if (playerInput.actions["Attack"].WasPressedThisFrame())
-        {
-            Debug.Log("あったっく呼び出し");
-
-        }
+        state.Update(isGrounded);
     }
+    
 }

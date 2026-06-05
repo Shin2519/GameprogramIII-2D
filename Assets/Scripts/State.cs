@@ -12,3 +12,22 @@ public class State
     public virtual void End() { }
 
 }
+
+public class StateMove:State
+{
+    public float speed;
+    public float jumpSpeed;
+
+    public override void Update(bool isGrounded)
+    {
+        //isGrounded = true;
+        var move = playerInput.actions["Move"].ReadValue<Vector2>();
+        rb.linearVelocityX = move.x * speed;
+
+        if (playerInput.actions["Jump"].WasPressedThisFrame())
+        {
+            Debug.Log("ƒWƒƒƒ“ƒvŒÄ‚Ño‚µ");
+            rb.linearVelocityY = jumpSpeed*Time.deltaTime;
+        }
+    }
+}
