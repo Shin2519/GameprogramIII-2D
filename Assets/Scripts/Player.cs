@@ -5,14 +5,20 @@ using R3.Triggers;
 
 public class Player : MonoBehaviour
 {
+    
     [SerializeField] float speed;
     [SerializeField] float jumpSpeed;
+    private int groundcheck;
 
     public float MaxLife => 100f;
     public ReactiveProperty<float> life { get; private set; } = new();
 
     PlayerInput playerInput;
     Rigidbody2D rb;
+    Animator animator;
+
+    State state;
+    StateMove stateMove = new();
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -20,6 +26,13 @@ public class Player : MonoBehaviour
         playerInput = GetComponent<PlayerInput>();
         rb = GetComponent<Rigidbody2D>();
         life.Value = MaxLife;
+
+        state = stateMove;
+        stateMove.playerInput = playerInput;
+        stateMove.rb = rb;
+        stateMove.speed = speed;
+        stateMove.jumpSpeed = jumpSpeed;
+        stateMove.animator = animator;
     }
 
     // Update is called once per frame
@@ -47,7 +60,18 @@ public class Player : MonoBehaviour
         // ジャンプ
         if (playerInput.actions["Jump"].WasPressedThisFrame())
         {
-            rb.linearVelocityY = jumpSpeed;
+            //if(groundcheck == 0)
+            //{
+                rb.linearVelocityY = jumpSpeed;
+            //}
+            
+        }
+
+        //アタック
+        if (playerInput.actions["Attack"].WasPressedThisFrame())
+        {
+            Debug.Log("あったっく呼び出し");
+
         }
     }
 }
