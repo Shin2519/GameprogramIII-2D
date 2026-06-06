@@ -8,7 +8,7 @@ public class Player : MonoBehaviour
     
     [SerializeField] float speed;
     [SerializeField] float jumpSpeed;
-    bool isGrounded = true;
+    bool isGrounded;
 
     public float MaxLife => 100f;
     public ReactiveProperty<float> life { get; private set; } = new();
@@ -42,5 +42,16 @@ public class Player : MonoBehaviour
     {
         state.Update(isGrounded);
     }
-    
+
+    public void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.CompareTag("Floor"))
+        {
+            if (isGrounded == false)
+            {
+                isGrounded = true;
+            }
+        }
+    }
+
 }

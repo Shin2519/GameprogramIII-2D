@@ -1,3 +1,5 @@
+using System.Data;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -8,7 +10,10 @@ public class State
     public Animator animator;
 
     public virtual void Start() { }
-    public virtual void Update(bool isGrounded) { }
+    public virtual void Update(bool isGrounded,out StateType nextState) 
+    {
+        nextState = StateType.Move;
+    }
     public virtual void End() { }
 
 }
@@ -17,6 +22,7 @@ public class StateMove:State
 {
     public float speed;
     public float jumpSpeed;
+    public GameObject Floor;
 
     public override void Update(bool isGrounded)
     {
@@ -27,7 +33,7 @@ public class StateMove:State
         if (playerInput.actions["Jump"].WasPressedThisFrame())
         {
             Debug.Log("ÉWÉÉÉìÉvåƒÇ—èoÇµ");
-            rb.linearVelocityY = jumpSpeed*Time.deltaTime;
+            rb.linearVelocityY = jumpSpeed;
         }
     }
 }

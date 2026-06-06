@@ -2062,7 +2062,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Player
   speed: 5
-  jumpSpeed: 50
+  jumpSpeed: 20
 --- !u!1 &2128428139
 GameObject:
   m_ObjectHideFlags: 0
