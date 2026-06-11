@@ -44,6 +44,7 @@ public class StateMove:State
 
         if (playerInput.actions["Attack"].WasPressedThisFrame())
         {
+            Debug.Log("AttackŒÄ‚Ño‚µ");
             nextState = StateType.Attack; 
         }
         else

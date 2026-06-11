@@ -1,5 +1,4 @@
 using R3;               // R3 core
-using R3.Triggers;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.LowLevel;
@@ -29,10 +28,7 @@ public class Player : MonoBehaviour
     State[] states = new State[]
     {
         new StateMove(),
-        null,
         new StateAttack(),
-        null,
-        null
     };
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -40,6 +36,7 @@ public class Player : MonoBehaviour
     {
         playerInput = GetComponent<PlayerInput>();
         rb = GetComponent<Rigidbody2D>();
+        animator = GetComponent<Animator>();
         state = states[(int)StateType.Move];
         states[(int)StateType.Move].playerInput = playerInput;
         states[(int)StateType.Move].rb = rb;
